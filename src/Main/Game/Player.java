@@ -1,6 +1,6 @@
 package Main.Game;
 
-import Main.Utils;
+import Main.Parsers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,7 +19,7 @@ public class Player {
     try{
       String s = reader.readLine();
       System.out.println("Please enter your starting amount");
-      money = Utils.tryParseDouble(s);
+      money = Parsers.tryParseDouble(s);
       if(money == null){
         throw new IllegalArgumentException("Please enter a valid amount of money");
       }

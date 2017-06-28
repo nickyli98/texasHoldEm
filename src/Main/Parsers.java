@@ -1,14 +1,13 @@
 package Main;
 
-public class Utils {
+public class Parsers {
 
   public static Integer tryParseInteger(String s) {
     try {
       return Integer.parseInt(s);
     } catch (NumberFormatException e) {
       e.printStackTrace();
-      System.out.println("Integer parse error");
-      return null;
+      throw new IllegalArgumentException("Not a number");
     }
   }
 
@@ -17,8 +16,7 @@ public class Utils {
       return Double.parseDouble(s);
     } catch (NumberFormatException e) {
       e.printStackTrace();
-      System.out.println("Double parse error");
-      return null;
+      throw new IllegalArgumentException("Not a number");
     }
   }
 
