@@ -5,7 +5,7 @@ public class Deck {
   private Card[] deck;
   private int cardsUsed;
 
-  public Deck(){
+  Deck(){
     deck = new Card[52];
     initializeCards();
     shuffle();
@@ -24,7 +24,7 @@ public class Deck {
     }
   }
 
-  public void shuffle(){
+  private void shuffle(){
     for(int i = deck.length - 1; i > 0; i--){
       int random = (int) (Math.random() * (i + 1));
       Card temp = deck[i];
@@ -34,7 +34,7 @@ public class Deck {
     cardsUsed = 0;
   }
 
-  public Card deal(){
+  Card deal(){
     if(cardsUsed == 52) {
       throw new IllegalStateException("Main.Game.Deck is empty");
     }

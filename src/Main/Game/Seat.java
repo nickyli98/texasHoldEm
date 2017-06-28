@@ -4,30 +4,43 @@ public class Seat {
 
   private Seat next;
   private final Player player;
-  private boolean small;
-  private boolean big;
+  private Card[] cards;
 
-  public Seat(Player player) {
+  Seat(Player player) {
     this.player = player;
+    cards = new Card[2];
   }
 
-  public Seat getNext() {
+  Seat getNext() {
     return next;
   }
 
-  public void setNext(Seat next) {
+  void setNext(Seat next) {
     this.next = next;
   }
 
-  public Player getPlayer() {
+  Player getPlayer() {
     return player;
   }
 
-  public void setSmall(boolean small) {
-    this.small = small;
+  double play(){
+    return 1.0;
   }
 
-  public void setBig(boolean big) {
-    this.big = big;
+  void deal(Card c, int pos){
+    cards[pos] = c;
+  }
+
+  Card getCard(int pos){
+    return cards[pos];
+  }
+
+  double bet(){
+    return 1;
+  }
+
+  //For blinds, forces a player to bet
+  double bet(double amount){
+    return player.bet(amount);
   }
 }

@@ -4,26 +4,30 @@ import static Main.Parsers.tryParseDouble;
 import static Main.Parsers.tryParseInteger;
 
 import Main.Game.Game;
+import java.io.BufferedReader;
+import java.io.IOError;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
 
-  //Argument: Type, Minimum Bet, Maximum Bet, Small Blind, Big Blind
+  //Argument: Type, Minimum Bet, Maximum Bet
+  //SmallBlind = BigBlind / 2
+  //BigBlind = Minimum Bet
   public static void main(String[] args) throws IOException {
     if(args.length == 5){
       double minimumBet = tryParseDouble(args[1]);
       double maximumBet = tryParseDouble(args[2]);
-      double smallBlind = tryParseDouble(args[3]);
-      double bigBlind = tryParseDouble(args[4]);
-      if(checkArguments(minimumBet, maximumBet, smallBlind, bigBlind)){
+      if(minimumBet < maximumBet && minimumBet > 0){
         if(args[0].equals("simulate")){
-
+          //TODO
         } else {
           int playerAmount = tryParseInteger(args[0]);
           if (playerAmount > 10 || playerAmount < 2){
             throw new IllegalArgumentException("Please enter a number between 2 and 10");
           } else {
-            Game current = new Game(playerAmount, minimumBet, maximumBet, smallBlind, bigBlind);
+            String[] playerNames = getPlayerNames(playerAmount);
+            Game current = new Game(minimumBet, maximumBet, minimumBet / 2, minimumBet, playerNames);
             current.run();
           }
         }
@@ -35,15 +39,19 @@ public class Main {
     }
   }
 
-  //Cond1: Maximum bet > minimum bet
-  //Cond2: Small blind < Big blind
-  //Cond3: Small, big blind both within limits
-  private static boolean checkArguments(double minimumBet, double maximumBet, double smallBlind,
-      double bigBlind) {
-    boolean cond1 = minimumBet < maximumBet;
-    boolean cond2 = smallBlind < bigBlind;
-    boolean cond3 = smallBlind > minimumBet && bigBlind < maximumBet;
-    return cond1 && cond2 && cond3;
+  private static String[] getPlayerNames(int playerAmount) {
+    String[] playerNames = new String[playerAmount];
+    for(int i = 0; i < playerAmount; i++){
+      try{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        //TODO: Some sort of name check
+        playerNames[i] = reader.readLine();
+        reader.close();
+      } catch (IOException e) {
+        e.printStackTrace();
+        throw new IllegalArgumentException("Main getPlayerNames Reader error");
+      }
+    }
+    return playerNames;
   }
-
 }
