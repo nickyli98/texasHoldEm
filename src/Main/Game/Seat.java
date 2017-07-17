@@ -4,11 +4,9 @@ public class Seat {
 
   private Seat next;
   private final Player player;
-  private Card[] cards;
 
   Seat(Player player) {
     this.player = player;
-    cards = new Card[2];
   }
 
   Seat getNext() {
@@ -23,24 +21,12 @@ public class Seat {
     return player;
   }
 
-  double play(){
-    return 1.0;
+  double play(double currentBet){
+    if(player.inGame()){
+      return player.playersTurn(currentBet);
+    } else {
+      return 0;
+    }
   }
 
-  void deal(Card c, int pos){
-    cards[pos] = c;
-  }
-
-  Card getCard(int pos){
-    return cards[pos];
-  }
-
-  double bet(){
-    return 1;
-  }
-
-  //For blinds, forces a player to bet
-  double bet(double amount){
-    return player.bet(amount);
-  }
 }

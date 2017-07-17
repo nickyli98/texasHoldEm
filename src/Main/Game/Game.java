@@ -60,12 +60,12 @@ public class Game {
     //Smallest possible card
     Card currentMax = new Card(2, Suit.DIAMONDS);
     for(int i = 0; i < amountOfPlayers; i++){
-      dealer.deal(cards.deal(), 0);
+      dealer.getPlayer().deal(cards.deal(), 0);
       CardComparator cc = new CardComparator();
-      if(cc.compare(currentMax, dealer.getCard(0)) == -1){
+      if(cc.compare(currentMax, dealer.getPlayer().getCard(0)) == -1){
         //newCard > currentMax
         newDealer = dealer;
-        currentMax = newDealer.getCard(0);
+        currentMax = newDealer.getPlayer().getCard(0);
       }
       dealer = dealer.getNext();
     }
