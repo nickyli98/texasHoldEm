@@ -8,10 +8,9 @@ class Player {
   private final String name;
   private double money;
 
-  Player(String name) {
+  Player(String name, double money) {
     this.name = name;
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    //TODO starting amount
+    this.money = money;
   }
 
   void playersTurn(){

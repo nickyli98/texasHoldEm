@@ -5,15 +5,17 @@ import static Main.Parsers.tryParseInteger;
 
 import Main.Game.Game;
 import java.io.BufferedReader;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
 
-  //Argument: Type, Minimum Bet, Maximum Bet
-  //SmallBlind = BigBlind / 2
-  //BigBlind = Minimum Bet
+  /*
+  Argument: Type, Minimum Bet, Maximum Bet
+  SmallBlind = BigBlind / 2
+  Starting = SmallBlind * 100
+  BigBlind = Minimum Bet
+  */
   public static void main(String[] args) throws IOException {
     if(args.length == 5){
       double minimumBet = tryParseDouble(args[1]);
@@ -21,6 +23,7 @@ public class Main {
       if(minimumBet < maximumBet && minimumBet > 0){
         if(args[0].equals("simulate")){
           //TODO
+          System.out.println("TODO");
         } else {
           int playerAmount = tryParseInteger(args[0]);
           if (playerAmount > 10 || playerAmount < 2){
@@ -39,18 +42,13 @@ public class Main {
     }
   }
 
-  private static String[] getPlayerNames(int playerAmount) {
+  private static String[] getPlayerNames(int playerAmount) throws IOException {
     String[] playerNames = new String[playerAmount];
     for(int i = 0; i < playerAmount; i++){
-      try{
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        //TODO: Some sort of name check
-        playerNames[i] = reader.readLine();
-        reader.close();
-      } catch (IOException e) {
-        e.printStackTrace();
-        throw new IllegalArgumentException("Main getPlayerNames Reader error");
-      }
+      BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+      //TODO: Some sort of name check
+      playerNames[i] = reader.readLine();
+      reader.close();
     }
     return playerNames;
   }
