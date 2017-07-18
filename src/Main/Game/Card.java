@@ -17,4 +17,13 @@ public class Card {
   Suit getSuite() {
     return suite;
   }
+
+  @Override
+  public String toString(){
+    if(suite == Suit.EMPTY){
+      return "";
+    } else {
+      return value + ", " + suite.toString();
+    }
+  }
 }

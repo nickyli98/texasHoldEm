@@ -57,6 +57,4 @@ public class Parsers {
     }
     return ChoiceEnum.INVALID;
   }
-
-
 }

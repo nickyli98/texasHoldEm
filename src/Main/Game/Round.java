@@ -1,5 +1,7 @@
 package Main.Game;
 
+import static Main.Game.GameTester.printPlayers;
+
 class Round {
 
   private final Seat dealer;
@@ -18,37 +20,50 @@ class Round {
 
   void play(double minimumBet, double maximumBet, double smallBlind, double bigBlind){
     //Rule 1b, 2a
+    printPlayers(dealer, amountOfPlayers);
+    System.out.println();
     setBlinds(dealer.getNext(), smallBlind, bigBlind);
+    printPlayers(dealer, amountOfPlayers);
+    System.out.println();
     //5
     dealCards(dealer.getNext());
+    printPlayers(dealer, amountOfPlayers);
+    System.out.println();
     //6
     //TODO fix this, big, small blind are forced to bet twice
-    playRound(dealer.getNext().getNext().getNext(), bigBlind);
+    playRound(dealer.getNext().getNext().getNext(), bigBlind, minimumBet, maximumBet);
+    printPlayers(dealer, amountOfPlayers);
+    System.out.println();
+    resetAlreadyBetted();
     //8
     deck.deal();
     //9
     for(int i = 0; i < 3; i++){
       tableCards[i] = deck.deal();
     }
-    //11
-    playRound(dealer.getNext(), 0);
-    //13
-    deck.deal();
-    //14
-    tableCards[3] = deck.deal();
-    //16
-    playRound(dealer.getNext(),0);
-    //18
-    deck.deal();
-    //19
-    tableCards[4] = deck.deal();
-    //21
-    playRound(dealer.getNext(),0);
+    printCommunityCards();
+//    }
+//    //11
+//    playRound(dealer.getNext(), 0, minimumBet, maximumBet);
+    resetAlreadyBetted();
+//    //13
+//    deck.deal();
+//    //14
+//    tableCards[3] = deck.deal();
+//    //16
+//    playRound(dealer.getNext(),0, minimumBet, maximumBet);
+    resetAlreadyBetted();
+//    //18
+//    deck.deal();
+//    //19
+//    tableCards[4] = deck.deal();
+//    //21
+//    playRound(dealer.getNext(),0, minimumBet, maximumBet);
+    resetAlreadyBetted();
   }
 
   private void dealCards(Seat begin){
     for(int i = 0; i < 2; i++){
-      //TODO: Check if circular array working as intended
       for(int j = 0; j < amountOfPlayers; j++){
         begin.getPlayer().deal(deck.deal(), i);
         begin = begin.getNext();
@@ -56,12 +71,15 @@ class Round {
     }
   }
 
-  private void playRound(Seat begin, double currentBet){
+  private void playRound(Seat begin, double currentBet, double minimumBet, double maximumBet){
     for(int player = 0; player < amountOfPlayers; player++){
-      pot += begin.getPlayer().playersTurn(currentBet);
+      pot += begin.play(currentBet, minimumBet, maximumBet);
       if(begin.getPlayer().raised()){
         currentBet += begin.getPlayer().raisedBy();
+        //Reset for loop for everyone to call/fold the raise
+        player = 0;
       }
+      begin = begin.getNext();
     }
   }
 
@@ -69,6 +87,22 @@ class Round {
   private void setBlinds(Seat current, double smallBlind, double bigBlind){
     pot += current.getPlayer().bet(smallBlind);
     pot += current.getNext().getPlayer().bet(bigBlind);
+  }
+
+  private void resetAlreadyBetted(){
+    Seat current = dealer;
+    for(int i = 0; i < amountOfPlayers; i++){
+      current.getPlayer().resetAlreadyBetted();
+      current = current.getNext();
+    }
+  }
+
+  private void printCommunityCards(){
+    for(int i = 0; i < 4; i++){
+      if(tableCards[i] != null){
+        System.out.println(tableCards[i].toString());
+      }
+    }
   }
 
 }

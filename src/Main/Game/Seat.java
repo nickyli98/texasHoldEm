@@ -21,9 +21,9 @@ public class Seat {
     return player;
   }
 
-  double play(double currentBet){
+  double play(double currentBet, double minimumBet, double maximumBet){
     if(player.inGame()){
-      return player.playersTurn(currentBet);
+      return player.playersTurn(currentBet, minimumBet, maximumBet);
     } else {
       return 0;
     }

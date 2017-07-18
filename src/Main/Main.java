@@ -10,14 +10,8 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-  /*
-  Argument: Type, Minimum Bet, Maximum Bet
-  SmallBlind = BigBlind / 2
-  Starting = SmallBlind * 100
-  BigBlind = Minimum Bet
-  */
   public static void main(String[] args) throws IOException {
-    if(args.length == 5){
+    if(args.length == 3){
       double minimumBet = tryParseDouble(args[1]);
       double maximumBet = tryParseDouble(args[2]);
       if(minimumBet < maximumBet && minimumBet > 0){
@@ -36,19 +30,20 @@ public class Main {
         }
       }
     } else {
-      System.out.println("Please enter the following while calling the program");
-      System.out.println("Arguments: Type, Minimum Bet, Maximum Bet, Small Blind, Big Blind");
+      System.out.println("Please enter one of the following while calling the program");
+      System.out.println("1. Amount of players, Minimum bet, Maximum bet");
+      System.out.println("2. Simulate");
       throw new IllegalArgumentException();
     }
   }
 
   private static String[] getPlayerNames(int playerAmount) throws IOException {
     String[] playerNames = new String[playerAmount];
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     for(int i = 0; i < playerAmount; i++){
-      BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+      System.out.println("Player " + (i + 1) + " - Please enter a name: ");
       //TODO: Some sort of name check
       playerNames[i] = reader.readLine();
-      reader.close();
     }
     return playerNames;
   }
