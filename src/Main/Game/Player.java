@@ -23,7 +23,7 @@ public class Player {
     System.out.println(name + "'s cards:");
     System.out.println(printCards());
     System.out.println("You have: " + money);
-    System.out.println("Current bet is $" + currentBet);
+    System.out.println("Current bet is $" + (currentBet - alreadyBetted));
     try {
       choice = getPlayerChoice();
       switch(choice.getChoice()){
@@ -31,11 +31,11 @@ public class Player {
           if(currentBet + choice.getRaiseAmount() > money){
             //Doesnt have enough money
             System.out.println("You have: " + money);
-            System.out.println("Current bet is: " + currentBet);
+            System.out.println("Current bet is: " + (currentBet - alreadyBetted));
             System.out.println("You cannot raise by: " + choice.getRaiseAmount());
-            return playersTurn(currentBet, minimumBet, currentBet);
+            return playersTurn(currentBet, minimumBet, maximumBet);
           } else if(choice.getRaiseAmount() < minimumBet || choice.getRaiseAmount() + currentBet > maximumBet){
-            System.out.println("Invalid bet. Current bet: " + currentBet);
+            System.out.println("Invalid bet. Current bet: " + (currentBet - alreadyBetted));
             System.out.println("You raised by: " + choice.getRaiseAmount());
             System.out.println("Minimum bet: " + minimumBet + " Maximum bet: " + maximumBet);
             return playersTurn(currentBet, minimumBet, maximumBet);
@@ -112,7 +112,7 @@ public class Player {
 
   @Override
   public String toString(){
-    return name + " - $" + money + " Cards: " + printCards();
+    return name + " - $" + money + "\nCards:\n" + printCards();
   }
 
   private String printCards() {
@@ -123,7 +123,7 @@ public class Player {
     } else if(second.equals("")){
       return first;
     } else {
-      return first + ", " + second;
+      return first + "\n" + second;
     }
   }
 

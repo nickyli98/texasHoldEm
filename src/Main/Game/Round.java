@@ -30,7 +30,6 @@ class Round {
     printPlayers(dealer, amountOfPlayers);
     System.out.println();
     //6
-    //TODO fix this, big, small blind are forced to bet twice
     playRound(dealer.getNext().getNext().getNext(), bigBlind, minimumBet, maximumBet);
     printPlayers(dealer, amountOfPlayers);
     System.out.println();
@@ -47,20 +46,25 @@ class Round {
     resetAlreadyBetted();
     printPlayers(dealer, amountOfPlayers);
     System.out.println();
-//    //13
-//    deck.deal();
-//    //14
-//    tableCards[3] = deck.deal();
-//    //16
-//    playRound(dealer.getNext(),0, minimumBet, maximumBet);
+    //13
+    deck.deal();
+    //14
+    tableCards[3] = deck.deal();
+    printCommunityCards();
+    //16
+    playRound(dealer.getNext(),0, minimumBet, maximumBet);
     resetAlreadyBetted();
-//    //18
-//    deck.deal();
-//    //19
-//    tableCards[4] = deck.deal();
-//    //21
-//    playRound(dealer.getNext(),0, minimumBet, maximumBet);
+    //18
+    deck.deal();
+    //19
+    tableCards[4] = deck.deal();
+    printCommunityCards();
+    //21
+    playRound(dealer.getNext(),0, minimumBet, maximumBet);
     resetAlreadyBetted();
+    System.out.println("Round over");
+    printCommunityCards();
+    printPlayers(dealer, amountOfPlayers);
   }
 
   private void dealCards(Seat begin){
@@ -99,11 +103,12 @@ class Round {
   }
 
   private void printCommunityCards(){
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 5; i++){
       if(tableCards[i] != null){
         System.out.println(tableCards[i].toString());
       }
     }
+    System.out.println();
   }
 
 }
