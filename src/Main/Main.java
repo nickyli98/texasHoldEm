@@ -1,5 +1,6 @@
 package Main;
 
+import static Main.NameGetter.getPlayerNames;
 import static Main.Parsers.tryParseDouble;
 import static Main.Parsers.tryParseInteger;
 
@@ -37,14 +38,7 @@ public class Main {
     }
   }
 
-  private static String[] getPlayerNames(int playerAmount) throws IOException {
-    String[] playerNames = new String[playerAmount];
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    for(int i = 0; i < playerAmount; i++){
-      System.out.println("Player " + (i + 1) + " - Please enter a name: ");
-      //TODO: Some sort of name check
-      playerNames[i] = reader.readLine();
-    }
-    return playerNames;
-  }
+  //TODO move this to somewhere else
+
+
 }

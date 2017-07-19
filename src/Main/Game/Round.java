@@ -42,10 +42,11 @@ class Round {
       tableCards[i] = deck.deal();
     }
     printCommunityCards();
-//    }
-//    //11
-//    playRound(dealer.getNext(), 0, minimumBet, maximumBet);
+    //11
+    playRound(dealer.getNext(), 0, minimumBet, maximumBet);
     resetAlreadyBetted();
+    printPlayers(dealer, amountOfPlayers);
+    System.out.println();
 //    //13
 //    deck.deal();
 //    //14

@@ -5,7 +5,7 @@ import static Main.Parsers.getPlayerChoice;
 import java.io.IOException;
 import java.nio.DoubleBuffer;
 
-class Player {
+public class Player {
 
   private final String name;
   private double money;
@@ -13,7 +13,7 @@ class Player {
   private double alreadyBetted;
   private Choice choice = new Choice(ChoiceEnum.CHECK, 0);
 
-  Player(String name, double money) {
+  public Player(String name, double money) {
     this.name = name;
     this.money = money;
     this.cards = new Card[2];
@@ -68,11 +68,11 @@ class Player {
     return 0;
   }
 
-  boolean inGame(){
+  public boolean inGame(){
     return choice.getChoice() != ChoiceEnum.FOLD;
   }
 
-  double bet(double amount) {
+  public double bet(double amount) {
     if(amount < money){
       alreadyBetted += amount;
       money -= amount;
@@ -83,11 +83,11 @@ class Player {
     }
   }
 
-  void deal(Card c, int pos) {
+  public void deal(Card c, int pos) {
     cards[pos] = c;
   }
 
-  Card getCard(int pos){
+  public Card getCard(int pos){
     assert(pos == 1 || pos == 0);
     Card c = cards[pos];
     if(c == null){
@@ -99,6 +99,10 @@ class Player {
 
   boolean raised(){
     return choice.getChoice() == ChoiceEnum.RAISE;
+  }
+
+  public double getMoney(){
+    return money;
   }
 
   double raisedBy(){
